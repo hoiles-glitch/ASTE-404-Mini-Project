@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Numerical parameters
-L = 0.01
+L = 0.1
 Nx = 100
 dx = L / (Nx - 1)
 # L is wall thickness may make thicker in future, Nx is number of nodes, dx is spatial step
 
-dt = 1e-4
-Nt = 15000
+dt = 1e-3
+Nt = 108000000
 # dt is time step, Nt is number of time steps,
-# both will chnage when I make orbital period longer
+# both will change when I make orbital period longer
 
 # Material properties
 k = 65.0
@@ -26,10 +26,10 @@ sigma = 5.670374419e-8
 # G_sun is solar irridance alpha_s is absorptivity,
 # epsilon is emissivity, sigma is the Stefan-Boltzmann constant
 
-# Pulse schedule parameters
-pulse_on = 0.15
-pulse_period = 0.20
-# pulse period will eventually change to match an orbit
+# Orbital Parameters
+T_orbit = 5400.0          
+omega = 2.0 * np.pi / T_orbit
+# T_orbit is the orbital period of 90 min, and omega is the angular frequency
 
 
 # Initial condition
@@ -40,24 +40,25 @@ Tnew = np.copy(T)
 T_history = np.zeros((Nt, Nx))
 # update the temnperature field and store it
 
-# To store the pulse schedule at each timestep
-pulse_trace = np.zeros(Nt)
-# storing the orbital period
-
+solar_trace = np.zeros(Nt)
+# storing the orbital period history (cos(phi))
 
 
 # FTCS time marching
 for n in range(Nt):
     t = n * dt
 
-    sunlit = (t % pulse_period) < pulse_on
-    pulse_trace[n] = 1.0 if sunlit else 0.0
+    # Orbital Sun Incidence Angle
+    phi = omega * t
+    mu = np.cos(phi)
+    mu_eff = max(mu, 0.0)
+    # phi is the sun incidence angle (rad), mu is the cosine of incidence, mu_eff is the effective angle of the sun
+    
+    solar_trace[n] = mu_eff
+    # the solar trace of solar flux
 
-    # Incoming absorbed solar heat flux
-    if sunlit:
-        q_in = alpha_s * G_sun
-    else:
-        q_in = 0.0
+    # Absorbed solar heat flux
+    q_in = alpha_s * G_sun * mu_eff
 
     # Outgoing thermal radiation from the surface
     q_rad = epsilon * sigma * T[0]**4
@@ -99,7 +100,7 @@ plt.show()
 
 # Square Pulse Time Trace
 plt.figure(figsize=(10,3))
-plt.step(time, pulse_trace, where='post', linewidth=2)
+plt.step(time, solar_trace, where='post', linewidth=2)
 plt.ylim(-0.2, 1.2)
 plt.xlabel("Time [s]")
 plt.ylabel("Sunlight")

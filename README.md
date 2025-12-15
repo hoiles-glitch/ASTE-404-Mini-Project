@@ -6,7 +6,7 @@ It produces:
 - Wall temperatures after one day in orbit
 - A trace of solar flux vs time in orbit
 
-Structure
+# Structure
 ASTE-404-Mini-Project/
    src/
       main.py

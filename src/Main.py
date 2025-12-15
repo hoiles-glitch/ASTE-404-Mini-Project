@@ -140,6 +140,9 @@ plt.grid(False)
 plt.tight_layout()
 plt.show()
 
+plt.savefig("results/orbital_solar_trace.png", dpi=300)
+plt.close()
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Temperature contour plot
@@ -154,7 +157,11 @@ for name, props in materials.items():
     plt.colorbar(label="Temperature [K]")
     plt.xlabel("Wall Depth [m]")
     plt.ylabel("Time [s]")
-    plt.title("Temperature Evolution — Solar Radiation FTCS Contour Plot for {name} coating")
+    plt.title(f"Temperature Evolution — Solar Radiation FTCS Contour Plot for {name} coating")
     plt.tight_layout()
     plt.show()
+
+    filename = f"results/temperature_{name.replace(' ', '_')}.png"
+    plt.savefig(filename, dpi=300)
+    plt.close()
 

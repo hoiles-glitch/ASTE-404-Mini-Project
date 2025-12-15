@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Numerical parameters
-L = 0.1
-Nx = 100
+L = 1
+Nx = 200
 dx = L / (Nx - 1)
 # L is wall thickness, Nx is number of nodes, dx is spatial step
 
 dt = 0.01
 T_orbit = 5400.0
-t_final = 3 * T_orbit
+t_final = 10 * T_orbit
 Nt = int(t_final / dt)
 # dt is a larger timestep as test is much longer, T_orbit is period of one 90 min orbit in seconds,
 # t_final is 3 orbits, Nt is the total number of steps
@@ -62,7 +62,8 @@ for n in range(Nt):
 
     # Orbital Sun Incidence Angle
     phi = omega * t
-    mu = np.cos(phi)
+    phi_0 = np.pi
+    mu = np.cos(phi+phi_0)
     mu_eff = max(mu, 0.0)
     # phi is the sun incidence angle (rad), mu is the cosine of incidence, mu_eff is the effective angle of the sun
     

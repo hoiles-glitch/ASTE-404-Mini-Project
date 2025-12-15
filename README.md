@@ -10,11 +10,10 @@ It produces:
 ASTE-404-Mini-Project/
    src/
       main.py
-   results/
-      
+   results/   
    report/
       .gitignore
-      README.md
+   README.md
 
 To run:
 conda create -n miniproject python=3.10

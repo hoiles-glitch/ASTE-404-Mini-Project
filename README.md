@@ -17,8 +17,10 @@ ASTE-404-Mini-Project/
    README.md
 ```
 To run:
+```
 conda create -n miniproject python=3.10
 conda activate miniproject
 pip install -r numpy
 pip install -r matplotlib
 python -m src.main
+```

@@ -7,6 +7,7 @@ It produces:
 - A trace of solar flux vs time in orbit
 
 # Structure
+```
 ASTE-404-Mini-Project/
    src/
       main.py
@@ -14,7 +15,7 @@ ASTE-404-Mini-Project/
    report/
       .gitignore
    README.md
-
+```
 To run:
 conda create -n miniproject python=3.10
 conda activate miniproject
